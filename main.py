@@ -52,6 +52,9 @@ def get_n_participants(fname, label = ''):
 def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     # seabornのフォーマットを設定
     sns.set()
+    # sns.set_palette(sns.color_palette("Set1", 12))
+    sns.set_palette(sns.color_palette("tab20", 13))
+    # sns.set_palette()
 
     # 表のフォーマットをきれいに．
     plt.rcParams['font.size'] = 13
@@ -73,7 +76,8 @@ def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     ax.set_ylabel('n_participants')
 
     # 凡例
-    ax.legend(edgecolor = 'None')
+    # ax.legend(edgecolor = 'None')
+    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, fontsize=10, edgecolor = 'None')
 
     plt.tight_layout()
 
@@ -88,6 +92,7 @@ if __name__ == '__main__':
 
     dir_path = 'input'    # ディレクトリのpathを指定
 
+    # csvファイル一覧を取得
     fnames_AM = []
     fnames_PM = []
     fnames = []
@@ -110,13 +115,12 @@ if __name__ == '__main__':
             fnames.append(fname)
     else:
         fnames += fnames_AM + fnames_PM
+    # ファイル名を会場番号順に並べ替える．
+    fnames = sorted(list(set(fnames)), key = lambda x:int(x.split('.')[0].split('_')[0].split('Z')[-1]))
     
-        
-    # fnames = [fname for fname in os.listdir(dir_path) if '.csv' in fname and '_AM' not in fname and '_PM' not in fname]   # csvファイル一覧を取得
-    # fnames = ['example.csv']
-    
+    # 一つのDataFrameにまとめる．
     df_n_participants = pd.concat([get_n_participants(os.path.join(dir_path, fname), label = fname.split('_')[0]) for fname in fnames], axis = 1)
     df_n_participants.fillna(0, inplace = True) # 時間の合わないところ (NaNとなってしまうところ) は参加人数0なのでfillna(0)
 
     # 画像の生成
-    get_figure(df_n_participants, debug=True, fname = 'n_participants.png')
+    get_figure(df_n_participants, debug=False, fname = os.path.join('output', 'n_participants_day1.png'))
