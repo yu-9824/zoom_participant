@@ -123,4 +123,4 @@ if __name__ == '__main__':
     df_n_participants.fillna(0, inplace = True) # 時間の合わないところ (NaNとなってしまうところ) は参加人数0なのでfillna(0)
 
     # 画像の生成
-    get_figure(df_n_participants, debug=False, fname = os.path.join('output', 'n_participants_day1.png'))
+    get_figure(df_n_participants, debug=True, fname = os.path.join('output', 'n_participants_day2.png'))
