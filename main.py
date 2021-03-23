@@ -75,7 +75,7 @@ def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
 
     # label
     ax.set_xlabel('Time')
-    ax.set_ylabel('n_participants')
+    ax.set_ylabel('Number of participants')
 
     # 凡例
     # ax.legend(edgecolor = 'None')
