@@ -63,7 +63,7 @@ def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     plt.rcParams['font.family'] = 'Helvetica'
 
     # figureオブジェクト，axisオブジェクトの生成
-    fig = plt.figure(facecolor = 'white', dpi = 150)
+    fig = plt.figure(facecolor = 'white', dpi = 300)
     ax = fig.add_subplot(111)
 
     for i, (name, sr_participants) in enumerate(df_participants.iteritems()):
@@ -130,4 +130,4 @@ if __name__ == '__main__':
     df_n_participants = pd.concat([sr_total, df_n_participants], axis = 1)
 
     # 画像の生成
-    get_figure(df_n_participants, debug=True, fname = os.path.join('output', 'n_participants_day2.png'))
+    get_figure(df_n_participants, debug = True, fname = os.path.join('output', 'n_participants_day2.png'))
