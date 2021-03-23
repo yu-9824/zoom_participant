@@ -51,10 +51,12 @@ def get_n_participants(fname, label = ''):
 
 def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     # seabornのフォーマットを設定
-    sns.set()
+    sns.set(style = 'whitegrid')
     # sns.set_palette(sns.color_palette("Set1", 12))
     sns.set_palette(sns.color_palette("tab20", 13))
     # sns.set_palette()
+
+    c_list = ['#00215d', '#00468b', '#0071bc', '#589fef', '#8fd0ff', '#8c0000', '#c50827', '#ff5050', '#ff857c', '#ffb9ac', '#c9c9c9', '#999999', '#6b6b6b', '#3f3f3f', '#2a2a2a']
 
     # 表のフォーマットをきれいに．
     plt.rcParams['font.size'] = 13
@@ -64,9 +66,9 @@ def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     fig = plt.figure(facecolor = 'white', dpi = 150)
     ax = fig.add_subplot(111)
 
-    for name, sr_participants in df_participants.iteritems():
+    for i, (name, sr_participants) in enumerate(df_participants.iteritems()):
         # plot
-        ax.plot(sr_participants.index, sr_participants, label = name)
+        ax.plot(sr_participants.index, sr_participants, label = name, c = c_list[i])
 
     # x軸のformat
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M')) # x軸の表示をきれいに
@@ -121,6 +123,11 @@ if __name__ == '__main__':
     # 一つのDataFrameにまとめる．
     df_n_participants = pd.concat([get_n_participants(os.path.join(dir_path, fname), label = fname.split('_')[0]) for fname in fnames], axis = 1)
     df_n_participants.fillna(0, inplace = True) # 時間の合わないところ (NaNとなってしまうところ) は参加人数0なのでfillna(0)
+
+    # 合計値を加える
+    sr_total = df_n_participants.sum(axis = 1)
+    sr_total.name = 'Total'
+    df_n_participants = pd.concat([sr_total, df_n_participants], axis = 1)
 
     # 画像の生成
     get_figure(df_n_participants, debug=True, fname = os.path.join('output', 'n_participants_day2.png'))
