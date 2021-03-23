@@ -99,7 +99,7 @@ if __name__ == '__main__':
     fnames_PM = []
     fnames = []
     for fname in os.listdir(dir_path):
-        if '.csv' in fname:
+        if '.csv' in fname and '2日目' in fname:
             if '_AM' in fname:
                 fnames_AM.append(fname)
             elif '_PM' in fname:
