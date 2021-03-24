@@ -112,7 +112,7 @@ if __name__ == '__main__':
     from pdb import set_trace
 
     dir_path = 'input'    # ディレクトリのpathを指定
-    day = 2
+    day = 3
 
     # csvファイル一覧を取得
     fnames_AM = []
@@ -150,7 +150,7 @@ if __name__ == '__main__':
     df_n_participants = pd.concat([sr_total, df_n_participants], axis = 1)
 
     # 画像の生成
-    get_figure(df_n_participants, debug = False, fname = os.path.join('output', 'n_participants_day{0}.png'.format(day)))
+    get_figure(df_n_participants, debug = True, fname = os.path.join('output', 'n_participants_day{0}.png'.format(day)))
 
     # データの生成
     output_csv(df_n_participants, fname = os.path.join('output', 'n_participants_day{0}.csv'.format(day)))
