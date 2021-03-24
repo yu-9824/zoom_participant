@@ -11,7 +11,7 @@
 - この時点で見えている「csvファイルでエクスポート」はミーティングのリストを書き出すだけなので<b>不要</b>．
 <br>
 
-![https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend30a.png](img/zoom_attend30a.png)
+![https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend30a.png](img/zoom_attend30a.png)<br>
 引用: [https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend30a.png](https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend30a.png)
 
 
@@ -19,7 +19,7 @@
 - 「重複しないユーザーを表示する」のチェックは<b>外す</b>（おそらくデフォルトは外れているはずですが）．
 <br>
 
-![https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend3a.png](img/zoom_attend3a.png)
+![https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend3a.png](img/zoom_attend3a.png)<br>
 引用: [https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend3a.png](https://www.inf.uec.ac.jp/onlect/wp-content/uploads/2020/05/zoom_attend3a.png)
 
 ## ファイル名を「会場名_n日目.csv」に設定
