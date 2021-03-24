@@ -53,7 +53,7 @@ def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     # seabornのフォーマットを設定
     sns.set(style = 'whitegrid')
     # sns.set_palette(sns.color_palette("Set1", 12))
-    sns.set_palette(sns.color_palette("tab20", 13))
+    # sns.set_palette(sns.color_palette("tab20", 13))
     # sns.set_palette()
 
     c_list = ['#00215d', '#00468b', '#0071bc', '#589fef', '#8fd0ff', '#8c0000', '#c50827', '#ff5050', '#ff857c', '#ffb9ac', '#c9c9c9', '#999999', '#6b6b6b', '#3f3f3f', '#2a2a2a']
@@ -63,7 +63,7 @@ def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     plt.rcParams['font.family'] = 'Helvetica'
 
     # figureオブジェクト，axisオブジェクトの生成
-    fig = plt.figure(facecolor = 'white', dpi = 300)
+    fig = plt.figure(facecolor = 'white', dpi = 150)
     ax = fig.add_subplot(111)
 
     for i, (name, sr_participants) in enumerate(df_participants.iteritems()):
@@ -86,20 +86,40 @@ def get_figure(df_participants, debug = False, fname = 'n_participants.png'):
     if debug:
         plt.show()
     else:
-        fig.savefig(fname, dpi = 150)
+        fig.savefig(fname, dpi = 300)
+
+def output_csv(df_n_participants, fname):
+    td = datetime.timedelta(minutes=1)
+
+    starttime_hour = df_n_participants.index.floor('h').min()
+    endtime_hour = df_n_participants.index.ceil('h').max() + td
+    
+    starttime = df_n_participants.index.min()
+    endtime = df_n_participants.index.max() + td
+    
+    def get_fill_df(l, r):
+        lst = []
+        t = l
+        while t < r:
+            lst.append(t)
+            t += td
+        return pd.DataFrame(np.zeros([len(lst), df_n_participants.shape[1]], dtype = np.int64), index = lst, columns = df_n_participants.columns)
+    df_output = pd.concat([get_fill_df(l = starttime_hour, r = starttime), df_n_participants, get_fill_df(l = endtime, r = endtime_hour)], axis = 0)
+    df_output.to_csv(fname, encoding = 'utf_8_sig')
     
 
 if __name__ == '__main__':
     from pdb import set_trace
 
     dir_path = 'input'    # ディレクトリのpathを指定
+    day = 2
 
     # csvファイル一覧を取得
     fnames_AM = []
     fnames_PM = []
     fnames = []
     for fname in os.listdir(dir_path):
-        if '.csv' in fname and '2日目' in fname:
+        if '.csv' in fname and '{0}日目'.format(day) in fname:
             if '_AM' in fname:
                 fnames_AM.append(fname)
             elif '_PM' in fname:
@@ -130,4 +150,7 @@ if __name__ == '__main__':
     df_n_participants = pd.concat([sr_total, df_n_participants], axis = 1)
 
     # 画像の生成
-    get_figure(df_n_participants, debug = True, fname = os.path.join('output', 'n_participants_day2.png'))
+    get_figure(df_n_participants, debug = False, fname = os.path.join('output', 'n_participants_day{0}.png'.format(day)))
+
+    # データの生成
+    output_csv(df_n_participants, fname = os.path.join('output', 'n_participants_day{0}.csv'.format(day)))
